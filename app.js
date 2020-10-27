@@ -1,3 +1,54 @@
+Vue.component("CoinDetail", {
+  props: ["changePercent", "title", "name", "img","currentPrice","pricesWithDays"],
+
+  data() {
+    return {
+      showPrices: false,
+      value: 800,
+    };
+  },
+
+  methods: {
+    toggleShowPrices() {
+      this.showPrices = !this.showPrices;
+    },
+  },
+
+  computed: {
+    convertValue() {
+      if (!this.value) {
+        return 0;
+      }
+
+      return this.value / this.currentPrice;
+    },
+  },
+
+  template: `
+    <div>
+      <h1 :class="changePercent > 0 ? 'green' : 'red'">{{title}}</h1>
+      <img :src="img" :alt="name" />
+
+      <hr>
+
+      <button v-on:click="toggleShowPrices">{{showPrices ? 'Hide prices' : 'Show prices'}}</button>
+      
+      <div v-if="showPrices">
+        <ul v-for="(price, index) in pricesWithDays" :key="price.day">
+          <li
+          :class="{orange: price.value === currentPrice, green: price.value > currentPrice, red: price.value < currentPrice}"
+          >{{index}} {{price.day}} - {{price.value}}</li>
+        </ul>
+      </div>
+
+      <div>
+        <input type="number" v-model="value" />
+        <span>{{convertValue}}</span>
+      </div>
+    </div>
+  `,
+});
+
 new Vue({
   el: "#app",
 
@@ -22,7 +73,7 @@ new Vue({
       color: "f4f4f4",
       name1: "",
       symbol1: "",
-      value:0
+      value: 0,
     };
   },
   computed: {
@@ -32,13 +83,6 @@ new Vue({
     title2() {
       return `${this.name1} - ${this.symbol1}`;
     },
-    convertValue(){
-      if(!this.value){
-        return 0
-      }
-
-      return this.value / this.currentPrice
-    }
   },
   watch: {
     showPrices(newValue, oldValue) {
