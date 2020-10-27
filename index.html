@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div id="app">
-      <h1 :class="changePercent > 0 ? 'green' : 'red'">{{name}}</h1>
+    <div id="app" :style="{background: '#' + color}">
+      <h1 :class="changePercent > 0 ? 'green' : 'red'">{{name}} - {{symbol}}</h1>
       <img :src="img" :alt="name" />
       <hr>
       <span v-on:click="toggleShowPrices">{{showPrices ? 'Hide prices' : 'Show prices'}}</span>
