@@ -9,10 +9,10 @@
   </head>
   <body>
     <div id="app" :style="{background: '#' + color}">
-      <h1 :class="changePercent > 0 ? 'green' : 'red'">{{name}} - {{symbol}}</h1>
+      <h1 :class="changePercent > 0 ? 'green' : 'red'">{{title}}</h1>
       <img :src="img" :alt="name" />
       <hr>
-      <span v-on:click="toggleShowPrices">{{showPrices ? 'Hide prices' : 'Show prices'}}</span>
+      <button v-on:click="toggleShowPrices">{{showPrices ? 'Hide prices' : 'Show prices'}}</button>
       <div v-if="showPrices">
         <ul v-for="(price, index) in pricesWithDays" :key="price.day">
           <li
@@ -20,6 +20,23 @@
           >{{index}} {{price.day}} - {{price.value}}</li>
         </ul>
       </div>
+
+      <hr>
+      <div>
+        <input type="text" ref="name1">
+        <input type="text" ref="symbol1">
+        <button v-on:click="handleChangeTitle"></button>
+        <hr>
+        <h1>{{name1}} {{symbol1}}</h1>
+      </div>
+
+      <hr>
+
+      <div>
+        <input type="number" v-model="value">
+        <span>{{convertValue}}</span>
+      </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
