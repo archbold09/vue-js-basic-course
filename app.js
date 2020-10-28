@@ -11,6 +11,7 @@ Vue.component("CoinDetail", {
   methods: {
     toggleShowPrices() {
       this.showPrices = !this.showPrices;
+      this.$emit("change-color", this.showPrices ? "FF96C8" : "3D3D3D");
     },
   },
 
@@ -36,6 +37,9 @@ Vue.component("CoinDetail", {
 
       <button v-on:click="toggleShowPrices">{{showPrices ? 'Hide prices' : 'Show prices'}}</button>
       
+      <slot name="text"></slot>
+      <slot name="link"></slot>
+
       <div v-if="showPrices">
         <ul v-for="(price, index) in coin.pricesWithDays" :key="price.day">
           <li
@@ -54,6 +58,8 @@ Vue.component("CoinDetail", {
 
 new Vue({
   el: "#app",
+  created() {console.log('created');},
+  mounted() {console.log('mounted')},
 
   data() {
     return {
@@ -80,14 +86,9 @@ new Vue({
       color: "f4f4f4",
     };
   },
-  // methods: {
-  //   toggleShowPrices() {
-  //     this.showPrices = !this.showPrices;
-  //     this.color = this.color.split("").reverse().join("");
-  //   },
-  //   handleChangeTitle() {
-  //     this.name1 = this.$refs.name1.value;
-  //     this.symbol1 = this.$refs.symbol1.value;
-  //   },
-  // },
+  methods: {
+    updateColor(color) {
+      this.color = color || this.color.split("").reverse().join("");
+    },
+  },
 });
